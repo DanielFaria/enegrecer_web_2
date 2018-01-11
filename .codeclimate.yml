@@ -15,4 +15,4 @@ engines:
       - javascript:
 exclude_patterns:
 - "src/**/*.test.js"
-- "src/testeFuncional/*.js"
+- "src/testeFuncional/**/*.js"
