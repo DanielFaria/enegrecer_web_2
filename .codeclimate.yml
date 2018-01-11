@@ -14,5 +14,6 @@ engines:
       languages:
       - javascript:
 exclude_patterns:
+- "src/testeFuncional/*.js"
 - "src/**/*.test.js"
-- "src/testeFuncional/**/*.js"
+
