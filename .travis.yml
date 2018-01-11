@@ -1,0 +1,42 @@
+language: node_js
+cache:
+  yarn: true
+  directories:
+  - "node_modules"
+node_js: '8'
+
+
+stages:
+  - lint
+  - name: test
+    if: type = pull_request 
+  - name: test-with-coverage 
+    if: (NOT (type = pull_request ))
+  - deploy   
+
+jobs:
+  include:
+  - stage: lint
+    script:
+      - yarn run build-css
+      - yarn lint
+  - stage: test-with-coverage 
+    script: yarn test-coverage
+  - stage: test 
+    script: yarn test
+  - stage: deploy
+    before_script:
+      - yarn run build-css 
+      - yarn build
+    deploy:
+      provider: firebase
+      skip_cleanup: true
+      on:
+        branch: master
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/a387d084c573fd34e585
+    on_success: change
+    on_failure: always
+    on_start: always
